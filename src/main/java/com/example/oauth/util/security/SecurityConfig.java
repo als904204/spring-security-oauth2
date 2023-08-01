@@ -2,7 +2,7 @@ package com.example.oauth.util.security;
 
 import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toH2Console;
 
-import com.example.oauth.util.security.service.CustomOAuth2UserService;
+import com.example.oauth.util.security.oauth.service.CustomOAuth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
