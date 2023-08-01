@@ -2,6 +2,7 @@ package com.example.oauth.util.security;
 
 import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toH2Console;
 
+import com.example.oauth.util.security.oauth.handler.OAuth2LoginFailureHandler;
 import com.example.oauth.util.security.oauth.handler.OAuth2LoginSuccessHandler;
 import com.example.oauth.util.security.oauth.service.CustomOAuth2UserService;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,8 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class SecurityConfig {
 
     private final CustomOAuth2UserService customOAuth2UserService;
+    private final OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
+    private final OAuth2LoginFailureHandler oAuth2LoginFailureHandle;
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
@@ -32,7 +35,8 @@ public class SecurityConfig {
                 .defaultSuccessUrl("/")
                 .userInfoEndpoint(point -> point
                     .userService(customOAuth2UserService))
-                .successHandler(new OAuth2LoginSuccessHandler())
+                .successHandler(oAuth2LoginSuccessHandler)
+                .failureHandler(oAuth2LoginFailureHandle)
             )
             .headers(headers -> headers
                 .frameOptions(FrameOptionsConfig::disable)
@@ -44,4 +48,6 @@ public class SecurityConfig {
 
         return http.build();
     }
+
+
 }
