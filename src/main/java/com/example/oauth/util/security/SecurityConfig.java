@@ -2,6 +2,7 @@ package com.example.oauth.util.security;
 
 import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toH2Console;
 
+import com.example.oauth.util.security.oauth.handler.OAuth2LoginSuccessHandler;
 import com.example.oauth.util.security.oauth.service.CustomOAuth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -31,8 +32,9 @@ public class SecurityConfig {
                 .defaultSuccessUrl("/")
                 .userInfoEndpoint(point -> point
                     .userService(customOAuth2UserService))
+                .successHandler(new OAuth2LoginSuccessHandler())
             )
-            .headers(headers->headers
+            .headers(headers -> headers
                 .frameOptions(FrameOptionsConfig::disable)
             )
             .csrf(csrf -> csrf

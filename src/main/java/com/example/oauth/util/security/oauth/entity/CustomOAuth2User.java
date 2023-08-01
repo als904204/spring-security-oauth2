@@ -3,6 +3,7 @@ package com.example.oauth.util.security.oauth.entity;
 import com.example.oauth.member.entity.Role;
 import java.util.Collection;
 import java.util.Map;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 
@@ -10,10 +11,11 @@ import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
  * OAuth2User 커스텀 구현체
  * CustomOAuth2UserService.loadUser 메서드 리턴 클래스
  */
+@Getter
 public class CustomOAuth2User extends DefaultOAuth2User {
 
-    private String email;
-    private Role role;
+    private final String email;
+    private final Role role;
     /**
      * Constructs a {@code DefaultOAuth2User} using the provided parameters.
      *
