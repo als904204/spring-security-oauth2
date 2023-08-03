@@ -1,6 +1,5 @@
 package com.example.oauth.util.security.oauth.handler;
 
-import com.example.oauth.member.entity.Role;
 import com.example.oauth.util.security.oauth.entity.CustomOAuth2User;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -25,23 +24,9 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
         Authentication authentication) throws IOException {
         log.info("OAuth2SuccessHandler 실행");
 
-
         CustomOAuth2User principal = (CustomOAuth2User) authentication.getPrincipal();
-        String email = principal.getEmail();
-        System.out.println("email = " + email);
-        Authentication securityUser = createAuthenticationForUser(principal);
-
-        SecurityContextHolder.getContext().setAuthentication(securityUser);
+        response.sendRedirect("/api/v1/member/info");
 
 
-
-    }
-
-    public Authentication createAuthenticationForUser(CustomOAuth2User principal) {
-        String email = principal.getEmail();
-        List<SimpleGrantedAuthority> role = List.of(new SimpleGrantedAuthority(principal.getRole().getKey()));
-        String sub = principal.getAttribute("sub");
-
-        return new UsernamePasswordAuthenticationToken(email, sub,role);
     }
 }

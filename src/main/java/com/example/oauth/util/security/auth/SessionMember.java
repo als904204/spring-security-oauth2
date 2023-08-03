@@ -6,11 +6,13 @@ import lombok.Getter;
 
 @Getter
 public class SessionMember implements Serializable {
+    private final Long memberId;
     private final String nickname;
     private final String email;
     private final String imageUrl;
 
     public SessionMember(Member member) {
+        this.memberId = member.getId();
         this.nickname = member.getNickname();
         this.email = member.getEmail();
         this.imageUrl = member.getImageUrl();

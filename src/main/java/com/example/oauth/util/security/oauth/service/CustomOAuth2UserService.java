@@ -4,8 +4,10 @@ package com.example.oauth.util.security.oauth.service;
 import com.example.oauth.member.entity.Member;
 import com.example.oauth.member.entity.SocialType;
 import com.example.oauth.member.repository.MemberRepository;
+import com.example.oauth.util.security.auth.SessionMember;
 import com.example.oauth.util.security.oauth.attributes.OAuthAttributes;
 import com.example.oauth.util.security.oauth.entity.CustomOAuth2User;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -27,6 +29,8 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
     private final MemberRepository memberRepository;
     private static final String NAVER = "naver";
     private static final String KAKAO = "kakao";
+
+    private final HttpSession httpSession;
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         log.info("CustomOAuth2UserService.loadUser() 실행 - OAuth2 로그인 요청 진입");
@@ -58,8 +62,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         assert extractUserInfo != null;
         Member createdMember = getMember(extractUserInfo, socialType);
 
-
-
+        httpSession.setAttribute("member",new SessionMember(createdMember));
         return new CustomOAuth2User(
             Collections.singleton(new SimpleGrantedAuthority(createdMember.getRole().getKey())),
             attributes,
