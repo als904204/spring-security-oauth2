@@ -25,7 +25,7 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
         log.info("OAuth2SuccessHandler 실행");
 
         CustomOAuth2User principal = (CustomOAuth2User) authentication.getPrincipal();
-        response.sendRedirect("/api/v1/member/info");
+        response.sendRedirect("/");
 
 
     }

@@ -1,15 +1,22 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
+<div class="top">
+    <div class="login">
+        <h1>구글 로그인</h1>
 
-<h1>구글 로그인</h1>
+        <a href="/oauth2/authorization/google">Google Login</a>
+    </div>
+    <div class="member-info">
+        <div sec:authorize="hasRole('USER')">당신의 권한은 USER 입니다.</div>
+        <div sec:authorize="hasRole('ADMIN')">당신의 권한은 ADMIN 입니다.</div>
+    </div>
+</div>
 
-<a href="/oauth2/authorization/google">Google Login</a>
 
-<p>내 정보</p>
 </body>
 </html>
