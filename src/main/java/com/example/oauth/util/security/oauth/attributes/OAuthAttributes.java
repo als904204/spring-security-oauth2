@@ -9,11 +9,13 @@ import java.util.Map;
 import java.util.UUID;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 각 소셜에서 받아오는 데이터가 다르므로
  * 소셜별로 데이터를 받는 데이터를 분기 처리하는 DTO 클래스
  */
+@Slf4j
 @Getter
 public class OAuthAttributes {
     private String nameAttributeKey; // OAuth2 로그인 진행 시 키가 되는 필드 값, PK와 같은 의미
@@ -51,14 +53,21 @@ public class OAuthAttributes {
     }
 
     public Member toEntity(SocialType socialType, OAuth2UserInfo oauth2UserInfo) {
+        String extractedEmail = extractNameFromEmail(oauth2UserInfo);
         return Member.builder()
             .socialType(socialType)
             .socialId(oauth2UserInfo.getId())
-            .email(UUID.randomUUID() + "@socialUser.com")
-            .nickname(oauth2UserInfo.getNickname())
+            .email(oauth2UserInfo.getEmail())
+            .nickname(extractedEmail)
             .imageUrl(oauth2UserInfo.getImageUrl())
-            .role(Role.GUEST)
+            .role(Role.USER)
             .build();
+    }
+
+    private String extractNameFromEmail(OAuth2UserInfo oauth2UserInfo) {
+        String email = oauth2UserInfo.getEmail();
+        String[] splitEmail = email.split("@");
+        return splitEmail[0];
     }
 
 }

@@ -26,8 +26,8 @@ public class Member {
     @Column(name = "member_id")
     private Long id;
 
+
     private String email;
-    private String password;
     private String nickname;
     private String imageUrl;
 
@@ -39,8 +39,5 @@ public class Member {
 
     private String socialId; // 로그인한 소셜 타입의 식별자 값 (일반 로그인인 경우 null)
 
-    public void updateRole() {
-        this.role = Role.USER;
-    }
 
 }

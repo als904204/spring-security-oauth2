@@ -1,15 +1,11 @@
 package com.example.oauth.util.security.oauth.service;
 
-import static com.example.oauth.member.entity.SocialType.KAKAO;
-import static com.example.oauth.member.entity.SocialType.NAVER;
 
 import com.example.oauth.member.entity.Member;
 import com.example.oauth.member.entity.SocialType;
 import com.example.oauth.member.repository.MemberRepository;
 import com.example.oauth.util.security.oauth.attributes.OAuthAttributes;
 import com.example.oauth.util.security.oauth.entity.CustomOAuth2User;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -17,7 +13,6 @@ import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserServ
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
-import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
@@ -62,6 +57,9 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
         assert extractUserInfo != null;
         Member createdMember = getMember(extractUserInfo, socialType);
+
+
+
         return new CustomOAuth2User(
             Collections.singleton(new SimpleGrantedAuthority(createdMember.getRole().getKey())),
             attributes,
